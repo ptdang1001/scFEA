@@ -15,7 +15,7 @@ class DynamicRegressionModel(nn.Module):
         self.dropout_rate = dropout_rate
 
         self.activation = nn.LeakyReLU()
-        self.out_activation = nn.Softplus()
+        # self.out_activation = nn.Softplus()
 
         # first layer
         self.fc1 = nn.Linear(input_dim, 2 * input_dim)
@@ -75,7 +75,7 @@ class DynamicRegressionModel(nn.Module):
         x6 += x
 
         x7 = self.fc_out(x6)
-        x7 = self.out_activation(x7)
+        # x7 = self.out_activation(x7)
         return x7
 
 
@@ -292,6 +292,7 @@ class MultiModelContainer(L.LightningModule):
 
     def on_test_epoch_end(self):
         self.predictions = torch.cat(self.predictions, dim=0).detach().cpu().numpy()
+        self.predictions = abs(self.predictions)
 
     def get_total_loss(self, samples_reactions, samples_reactions_geneMean):
 
