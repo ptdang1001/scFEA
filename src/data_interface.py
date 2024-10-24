@@ -222,7 +222,6 @@ def log_and_min_max_normalize(df):
     min_vals = log_df.min(axis=0)
     max_vals = log_df.max(axis=0)
     normalized_df = (log_df - min_vals) / (max_vals - min_vals + 1e-8)
-    normalized_df = normalized_df * 0.999999 + 1e-6
     return normalized_df
 
 
