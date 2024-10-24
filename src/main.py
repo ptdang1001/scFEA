@@ -49,6 +49,9 @@ def train_validation_inference(
     reactions_genes,
 ):
 
+    # set the random seed
+    # L.seed_everything(args.seed)
+    
     # define a group of models, # of models = # of reactions
     models = {
         reaction_i: (
@@ -204,9 +207,6 @@ def main(args):
     print(f"{SEP_SIGN} \nCurrent Input parameters:\n{args}\n {SEP_SIGN}")
     print(f"Current CPU cores: {os.cpu_count()}")
     print(f"Current GPU devices: {torch.cuda.device_count()}")
-
-    # set the random seed
-    L.seed_everything(args.seed)
 
     # load gene expression data
     # geneExpression is the gene expression data,
