@@ -217,6 +217,14 @@ def data_pre_processing(gene_expression, reactions_genes, compounds_reactions):
 
     return gene_expression, reactions_genes, compounds_reactions
 
+def log_and_min_max_normalize(df):
+    log_df = np.log1p(df)
+    min_vals = log_df.min(axis=0)
+    max_vals = log_df.max(axis=0)
+    normalized_df = (log_df - min_vals) / (max_vals - min_vals + 1e-8)
+    normalized_df = normalized_df * 0.999999 + 1e-6
+    return normalized_df
+
 
 def z_score_normalization(data):
     """Apply Z-score normalization to each column."""
@@ -278,7 +286,7 @@ def normalize_gene_expression(gene_expression, reactions_genes):
         cur_data = None
         cur_data = gene_expression.loc[:, genes].values
         reactions_geneExpressionMean[reaction] = cur_data.mean(axis=1)
-        cur_data = z_score_normalization(cur_data)
+        cur_data = log_and_min_max_normalize(cur_data)
         cur_data = fill_zeros_with_positive_gaussian(cur_data)
         reactions_gene_expression_normalized[reaction] = cur_data
 
