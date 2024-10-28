@@ -37,7 +37,8 @@ from utils import get_imbalanceLoss
 # global variables
 SEP_SIGN = "*" * 100
 warnings.filterwarnings("ignore")
-torch.set_float32_matmul_precision("high")
+if torch.cuda.is_available():
+    torch.set_float32_matmul_precision("high")
 
 
 # @pysnooper.snoop()
@@ -118,11 +119,12 @@ def train_validation_inference(
         monitor="val_total_loss", patience=10, verbose=False, mode="min"
     )
 
+    gpu_option = 'auto' if torch.cuda.is_available() else 'cpu'
     # define the trainer
     trainer = Trainer(
         default_root_dir=model_save_path,
         max_epochs=args.n_epoch,
-        accelerator="auto",
+        accelerator=gpu_option,
         devices="auto",
         strategy="auto",
         callbacks=[checkpoint_callback, early_stop_callback],
@@ -143,7 +145,7 @@ def train_validation_inference(
     test_trainer = Trainer(
         default_root_dir=model_save_path,
         max_epochs=1,
-        accelerator="auto",
+        accelerator=gpu_option,
         devices=1,
         strategy="auto",
     )
