@@ -16,3 +16,18 @@ I recommend using Anaconda to create a virtual environment to avoid any library 
 4. Running Locally:
 If your data is small, you may use the command "sh run_local.sh" to run the model on your local machine to make it easier. Don't forget to update some parameters like gene expression file name, input/output directory etc.
 
+## Citation
+If you use this code in your research, please cite the following paper:
+```
+@article{alghamdi2021graph,
+  title={A graph neural network model to estimate cell-wise metabolic flux using single-cell RNA-seq data},
+  author={Alghamdi, Norah and Chang, Wennan and Dang, Pengtao and Lu, Xiaoyu and Wan, Changlin and Gampala, Silpa and Huang, Zhi and Wang, Jiashi and Ma, Qin and Zang, Yong and others},
+  journal={Genome research},
+  volume={31},
+  number={10},
+  pages={1867--1884},
+  year={2021},
+  publisher={Cold Spring Harbor Lab}
+}
+```
+
